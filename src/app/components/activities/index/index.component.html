@@ -1,0 +1,86 @@
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Bienvenido a sus actividades</span>
+    </div>
+</nav>
+<br><br>
+<div class="position-end" style="padding-left: 80%;"> 
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalActividad">Registrar actividad</button>
+</div>
+<br><br>
+<div *ngIf="activities; else noData" class="accordion" id="accordionExample">
+  <div *ngFor="let activity of activities" class="accordion-item">
+    <h2 class="accordion-header" [id]="'heading'+activity.id">
+      <button class="accordion-button" type="button"  (click)="getReports(activity.id)"  data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+activity.id" aria-expanded="true" [attr.aria-controls]="'collapse'+activity.id">
+        {{ activity.description }}
+      </button>
+    </h2>
+    <div [id]="'collapse'+activity.id" class="accordion-collapse collapse close" [attr.aria-labelledby]="'heading'+activity.id" data-bs-parent="#accordionExample">
+      <div *ngIf="total < 8" class="position-end" style="padding-left: 80%;"> 
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Reportar avance</button>
+      </div>
+      <div *ngIf="reports" class="accordion-body">
+        <ul>
+          <li *ngFor="let report of reports"> {{report.report_date}} - {{report.reported_hours}} Horas</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #noData>
+    <h2>
+        No found data
+    </h2>
+</ng-template>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Registrar reporte</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12">
+          <label for="inputFecha" class="form-label">Fecha del reporte</label>
+          <input class="form-control" id="inputFecha" placeholder="yyyy-mm-dd" 
+                [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" required>
+        </div>
+        <br>
+        <div class="col-12">
+          <label for="inputHora" class="form-label">Fecha del reporte</label>
+          <input type="number" class="form-control" id="inputHora" min="1" [max]="hours_left" [(ngModel)]="report.reported_hours" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" (click)="posReport()" class="btn btn-primary">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Actividad -->
+<div class="modal fade" id="modalActividad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Registrar actividad</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12">
+          <label for="inputDescripcion" class="form-label">Description</label>
+          <input class="form-control" id="inputDescripcion" placeholder="Descripcion de la actividad" 
+          [(ngModel)]="activity.description" required>
+        </div>
+        <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" (click)="posActivity()" class="btn btn-primary">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>

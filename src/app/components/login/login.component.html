@@ -1,0 +1,23 @@
+<div class="row justify-content-center">
+    <div class="col-sm-10 col-md-4" style="background-color: rgba(101, 101, 150, 0.788);">
+        <br><br>
+        <div class="row justify-content-center">
+            <img src="assets/images/user-login.png" style="width: 200px;height:auto;">
+        </div>
+        <br>
+        <form class="form-row">
+            <div class="form-group ">
+                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="nit" id="nit" placeholder="nit" class="form-control" [(ngModel)]="login.nit" required>
+            </div>
+            <br>
+            <div class="form-group ">
+                <input type="password" name="password" id="password" placeholder="Contraseña" class="form-control" [(ngModel)]="login.password" required>
+            </div>
+            <br>
+            <div class="d-grid gap-2">
+                <button class="btn btn-success" (click)="autenticate()" type="button">Ingresar</button>
+            </div>
+            <br>
+        </form>
+    </div>
+</div>
